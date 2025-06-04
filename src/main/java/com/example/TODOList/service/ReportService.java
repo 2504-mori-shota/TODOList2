@@ -14,6 +14,6 @@ public class ReportService {
     private final ReportRepository reportRepository;
 
     public List<Report> getAllReports() {
-        return reportRepository.findAllByOrderByLimitDateAsc(); // 次で定義
+        return reportRepository.findAllByOrderByLimitDateAsc();
     }
 }
