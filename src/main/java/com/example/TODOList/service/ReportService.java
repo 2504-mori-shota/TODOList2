@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.beans.Transient;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -59,11 +58,26 @@ public class ReportService {
         report.setUpdatedDate(currentTime);
         return report;
     }
+
+    /*
+     * レコード1件取得
+     */
+    public ReportForm editReport(Integer id) {
+        List<Report> results = new ArrayList<>();
+        results.add((Report) reportRepository.findById(Long.valueOf(id)).orElse(null));
+        List<ReportForm> reports = setReportForm(results);
+        /*
+         * 上記の処理は仮にデータを2つ以上取得してきた際にバグがおこらないように配列にデータを入れ、
+         * その中から最初のデータを取得するようにしている。
+         */
+        return reports.get(0);
+    }
     @Transactional
-    public void updateStatus(Long id, int status){
+    public void updateStatus(Long id, int status) {
         Report report = reportRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("指定されたタスクが見つかりません: ID=" + id));
         report.setStatus(status);
         reportRepository.save(report);
     }
+
 }
