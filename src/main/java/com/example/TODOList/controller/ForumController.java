@@ -1,6 +1,7 @@
 package com.example.TODOList.controller;
 
 
+import com.example.TODOList.controller.form.ReportForm;
 import com.example.TODOList.repository.ReportRepository;
 import com.example.TODOList.repository.entity.Report;
 import com.example.TODOList.service.ReportService;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -27,8 +30,14 @@ public class ForumController {
      * 投稿内容表示処理
      */
     @GetMapping("/")
-    public String showTop(Model model) {
-        List<Report> tasks = reportService.getAllReports();
+    public String showTop( @RequestParam(name = "starDate", required = false)String startDate ,
+                           @RequestParam(name="endDate", required = false )String endDate,
+                           @RequestParam(name="status", required = false)String status,
+                           @RequestParam(name="content", required = false)String content,
+                           Model model
+    ) throws ParseException {
+        ModelAndView mav = new ModelAndView();
+        List<ReportForm> tasks = reportService.findByCreatedDateBetweenAndContentAndStatus(startDate , endDate, content, status);
         model.addAttribute("tasks", tasks);
         model.addAttribute("statuses", Report.Status.values()); // ステータスプルダウン用
         model.addAttribute("today", LocalDate.now()); // 今日の日付も渡してあげるわよ

@@ -30,13 +30,13 @@ public class Report {
     @Max(value = 4)
     private int status;
 
-    @Column(name = "limit_Date")
+    @Column(name = "limit_date", insertable = true, updatable = true)
     private Date limitDate;
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
 
-    @Column(name = "updated_Date")
+    @Column(name = "updated_Date", insertable = false, updatable = true)
     private Date updatedDate;
     public enum Status {
         未着手, 実行中, ステイ中, 完了
