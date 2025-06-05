@@ -45,7 +45,7 @@
             <td th:text="*{content}">内容</td>
             <td th:text="*{status}">ステータス</td>
             <td th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">期限</td>
-            <td><a class="btn btn-primary" th:href="@{/task/edit/{id}(id=*{id})}">編集</a></td>
+            <td><a class="btn btn-primary" th:href="@{/edit/{id}(id=${task.id})}">編集</a></td>
             <td><a class="btn btn-danger" th:href="@{/task/delete/{id}(id=*{id})}">削除</a></td>
         </tr>
 

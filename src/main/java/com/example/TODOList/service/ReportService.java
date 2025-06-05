@@ -57,4 +57,19 @@ public class ReportService {
         report.setUpdatedDate(currentTime);
         return report;
     }
+
+    /*
+     * レコード1件取得
+     */
+    public ReportForm editReport(Integer id) {
+        List<Report> results = new ArrayList<>();
+        results.add((Report) reportRepository.findById(Long.valueOf(id)).orElse(null));
+        List<ReportForm> reports = setReportForm(results);
+        /*
+         * 上記の処理は仮にデータを2つ以上取得してきた際にバグがおこらないように配列にデータを入れ、
+         * その中から最初のデータを取得するようにしている。
+         */
+        return reports.get(0);
+    }
+
 }

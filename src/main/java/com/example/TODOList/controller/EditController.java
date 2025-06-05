@@ -7,51 +7,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 
 @Controller
-public class AddController {
+public class EditController {
     @Autowired
     ReportService reportService;
 
-    @GetMapping("/add")
-    public ModelAndView newContent() {
+    @GetMapping("/edit/{id}")
+    public ModelAndView newContent(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView();
         // form用の空のentityを準備
-        ReportForm reportForm = new ReportForm();
-        // 画面遷移先を指定
-        mav.setViewName("/add");
+        ReportForm reportForm = reportService.editReport(id);
         // 準備した空のFormを保管
         mav.addObject("formModel", reportForm);
+        // 画面遷移先を指定
+        mav.setViewName("/edit");
         // mav.addObject("errorMessageForm", errorMessages);
         return mav;
     }
     /*
      * 新規投稿処理
      */
-    @PostMapping("/insert")
+    @PutMapping("/update/{id}")
 
     public ModelAndView addContent(
+            @PathVariable Integer id,
             @RequestParam(name="limit_date" , required = false)String limitDate,
-            @Valid
-            @ModelAttribute("formModel")ReportForm reportForm,
+            @ModelAttribute("task")ReportForm report,
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) throws ParseException {
         if (result.hasErrors()) {
             //フラッシュメッセージをセット
             redirectAttributes.addFlashAttribute("errorMessageForm", "タスクを入力してください");
-            return new ModelAndView("redirect:/add");
+            return new ModelAndView("redirect:/edit/{id}");
         }
+        report.setId(id);
         // 投稿をテーブルに格納
-        reportService.saveReport(reportForm, limitDate);
+        reportService.saveReport(report, limitDate);
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
