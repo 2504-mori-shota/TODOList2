@@ -13,6 +13,9 @@ public class ReportForm {
 
     @NotBlank
     private String content;
+
+    private  int status;
+
     @NotBlank
     private Date limitDate;
     private Date createdDate;

@@ -1,6 +1,8 @@
 package com.example.TODOList.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,18 +25,19 @@ public class Report {
 
     private String content;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @Column(name = "status")
+    @Min(value = 0)
+    @Max(value = 4)
+    private int status;
 
     @Column(name = "limit_Date")
     private Date limitDate;
 
-    @Column(name = "created_Date")
+    @Column(insertable = false, updatable = false)
     private Date createdDate;
 
     @Column(name = "updated_Date")
     private Date updatedDate;
-
     public enum Status {
         未着手, 実行中, ステイ中, 完了
     }
