@@ -51,10 +51,12 @@
                         <option th:each="status : ${statuses}"
                                 th:value="${status.ordinal()}"
                                 th:text="${status}"
-                                th:selected="${status}">
+                                th:selected="${status.ordinal() == task.status}">
                         </option>
                     </select>
-                    <button type="submit">変更</button>
+<!--                   onclick="..."←このHTML要素がクリックされたときに JavaScriptを実行して」っていう合図
+                       returnでtrueか、falseの制御をしている。                                          -->
+                    <button type="submit" onclick="return confirm('変更しますか？');">変更</button>
                 </form>
             </td>
 
@@ -68,7 +70,7 @@
             </td>
             <td>
                 <form th:action="@{/task/delete/{id}(id=*{id})}" >
-                    <button type="submit">削除</button>
+                    <button type="submit" onclick="return confirm('消去しますか？');">削除</button>
                 </form>
             </td>
         </tr>
