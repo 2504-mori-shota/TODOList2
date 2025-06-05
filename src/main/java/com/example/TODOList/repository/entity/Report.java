@@ -8,7 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Entity
@@ -32,6 +33,10 @@ public class Report {
 
     @Column(name = "limit_Date")
     private Date limitDate;
+    //  LocalDate に変換して返すメソッド
+    public LocalDate getLimitLocalDate() {
+        return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;

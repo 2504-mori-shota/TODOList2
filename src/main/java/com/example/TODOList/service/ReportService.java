@@ -77,6 +77,7 @@ public class ReportService {
         Report report = reportRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("指定されたタスクが見つかりません: ID=" + id));
         report.setStatus(status);
+        report.setUpdatedDate(new Date());
         reportRepository.save(report);
     }
 
