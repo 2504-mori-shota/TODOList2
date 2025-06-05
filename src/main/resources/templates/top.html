@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
     <title>ToDo</title>
 </head>
 <body>
@@ -35,7 +35,7 @@
 
         <button type="submit">絞込</button>
     </form>
-    <table border="1">
+    <table>
         <tr>
             <th>タスク内容　　　　</th>
             <th>ステータス　　　　</th>
@@ -43,34 +43,27 @@
         </tr>
         <tr th:each="task : ${tasks}">
             <td th:text="${task.content}">内容</td>
+            <td th:text="${task.status}">ステータス</td>
+            <td th:text="${#temporals.format(task.limitDate, 'yyyy/MM/dd')}">期限</td>
+        </tr>
 
-            <!-- ステータスのプルダウン -->
-            <td>
-                <select>
-                    <option th:each="status : ${statuses}"
-                            th:value="${status}"
-                            th:text="${status}"
-                            th:selected="${status} == ${task.status}">
-                    </option>
-                </select>
-            </td>
+            <!-- Sample Data -->
+        <tr th:each="taskList : ${taskList}" th:object="${taskList}">
+        <th scope="row" th:text="*{taskId}">1</th>
+        <td th:text="*{title}">Title</td>
+        <td th:text="*{description}">description</td>
+        <td th:text="${#temporals.format(taskList.deadline, 'yyyy/MM/dd')}">Formatted Deadline</td>
+        <td th:text="*{status == 1 ? '未着手' : status == 2 ? '完了' :　status == 3 ? 'ステイ中' : '実行中'}">Status</td>
+        <td><a class="btn btn-primary" href="/task/edit/1">edit</a></td>
+        <td><a class="btn btn-primary" href="/task/delete/1">delete</a></td>
+        </tr>
 
             <!-- タスク期限の色分け -->
             <!--            <td th:text="${#temporals.format(task.limitDate, 'yyyy/MM/dd')}"-->
             <!--                th:class="${task.limitDate.isBefore(today.plusDays(1)) ? 'red' : 'yellow'}">-->
             <!--            </td>-->
-        </tr>
-    </table>
 
-    <!-- スタイル定義 -->
-    <style>
-        .red {
-            background-color: #ffcccc;
-        }
-        .yellow {
-            background-color: #ffffcc;
-        }
-    </style>
+    </table>
 
 </div>
 

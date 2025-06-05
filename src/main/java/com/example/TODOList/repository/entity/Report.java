@@ -26,11 +26,14 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime limitDate;
+    @Column(name = "limit_Date")
+    private Date limitDate;
 
-    private LocalDateTime createdDate;
+    @Column(name = "created_Date")
+    private Date createdDate;
 
-    private LocalDateTime updatedDate;
+    @Column(name = "updated_Date")
+    private Date updatedDate;
 
     public enum Status {
         未着手, 実行中, ステイ中, 完了
