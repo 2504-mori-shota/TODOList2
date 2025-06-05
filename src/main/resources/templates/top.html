@@ -8,7 +8,7 @@
 <body>
 <div class="header-contents">
     <h1>ToDo</h1>
-    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"></span></p>
+    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
 </div>
 <div class="main-contents">
     <!--  新規タスク -->
@@ -18,9 +18,9 @@
 
     <!-- 検索フォーム -->
     <form th:action="@{/search}" method="get">
-        <label>期限 <input type="text" name="startDate" placeholder="YYYY/MM/DD"/></label>
+        <label>期限 <input type="date" name="startDate" /></label>
         ～
-        <label><input type="text" name="endDate" placeholder="YYYY/MM/DD" pattern="\d{4}/\d{2}/\d{2}"/></label>
+        <label><input type="date" name="endDate" /></label>
         <!-- プルダウン -->
         <label>ステータス　　
             <select name="status">
@@ -51,22 +51,27 @@
                         <option th:each="status : ${statuses}"
                                 th:value="${status.ordinal()}"
                                 th:text="${status}"
-                                th:selected="${status} == *{status}">
+                                th:selected="${status}">
                         </option>
                     </select>
                     <button type="submit">変更</button>
                 </form>
             </td>
 
-            <td th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">期限</td>
-            <td><a th:href="@{/edit/{id}(id=*{id})}">編集</a></td>
-            <td><a th:href="@{/task/delete/{id}(id=*{id})}">削除</a></td>
+            <td th:style="${task.limitLocalDate.isAfter(today) ? 'background-color:yellow' : 'background-color:red'}"
+                th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">
+            </td>
+            <td>
+                <form th:action="@{/edit/{id}(id=*{id})}" >
+                    <button type="submit">編集</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/task/delete/{id}(id=*{id})}" >
+                    <button type="submit">削除</button>
+                </form>
+            </td>
         </tr>
-
-        <!-- タスク期限の色分け -->
-        <!--            <td th:text="${#temporals.format(task.limitDate, 'yyyy/MM/dd')}"-->
-        <!--                th:class="${task.limitDate.isBefore(today.plusDays(1)) ? 'red' : 'yellow'}">-->
-        <!--            </td>-->
 
     </table>
 
