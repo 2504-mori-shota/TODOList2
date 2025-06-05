@@ -24,7 +24,7 @@
         <!-- プルダウン -->
         <label>ステータス　　
             <select name="status">
-                <option value="">--</option>
+                <option value=""></option>
                 <option th:each="status : ${statuses}"
                         th:value="${status}"
                         th:text="${status}">
@@ -37,16 +37,30 @@
     </form>
     <table>
         <tr>
-            <th>タスク内容</th>
-            <th>ステータス</th>
-            <th>タスク期限</th>
+            <th>タスク内容　　　　　</th>
+            <th>ステータス　　　　　</th>
+            <th>タスク期限　　　　　</th>
         </tr>
         <tr th:each="task : ${tasks}" th:object="${task}">
             <td th:text="*{content}">内容</td>
-            <td th:text="*{status}">ステータス</td>
+
+            <td>
+                <form th:action="@{/task/updateStatus}" method="post">
+                    <input type="hidden" name="id" th:value="*{id}" />
+                    <select name="status">
+                        <option th:each="status : ${statuses}"
+                                th:value="${status.ordinal()}"
+                                th:text="${status}"
+                                th:selected="${status} == *{status}">
+                        </option>
+                    </select>
+                    <button type="submit">変更</button>
+                </form>
+            </td>
+
             <td th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">期限</td>
-            <td><a class="btn btn-primary" th:href="@{/task/edit/{id}(id=*{id})}">編集</a></td>
-            <td><a class="btn btn-danger" th:href="@{/task/delete/{id}(id=*{id})}">削除</a></td>
+            <td><a th:href="@{/task/edit/{id}(id=*{id})}">編集</a></td>
+            <td><a th:href="@{/task/delete/{id}(id=*{id})}">削除</a></td>
         </tr>
 
         <!-- タスク期限の色分け -->

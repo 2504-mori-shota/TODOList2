@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,4 +39,10 @@ public class ForumController {
         reportRepository.deleteById(id);
         return "redirect:/"; // 一覧画面に戻す
     }
+    @PostMapping("/task/updateStatus")
+    public String updateStatus(@RequestParam Long id,@RequestParam int status){
+        reportService.updateStatus(id, status);
+        return "redirect:/";
+    }
+
 }

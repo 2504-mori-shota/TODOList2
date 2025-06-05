@@ -3,10 +3,12 @@ package com.example.TODOList.service;
 import com.example.TODOList.controller.form.ReportForm;
 import com.example.TODOList.repository.ReportRepository;
 import com.example.TODOList.repository.entity.Report;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.beans.Transient;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -56,5 +58,12 @@ public class ReportService {
         report.setCreatedDate(reqReport.getCreatedDate());
         report.setUpdatedDate(currentTime);
         return report;
+    }
+    @Transactional
+    public void updateStatus(Long id, int status){
+        Report report = reportRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("指定されたタスクが見つかりません: ID=" + id));
+        report.setStatus(status);
+        reportRepository.save(report);
     }
 }
