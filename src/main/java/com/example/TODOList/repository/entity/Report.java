@@ -2,6 +2,8 @@ package com.example.TODOList.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -11,6 +13,8 @@ import java.util.Date;
 @Table(name = "tasks")
 @Data
 
+@Getter
+@Setter
 public class Report {
     @Id
     @Column
@@ -32,4 +36,3 @@ public class Report {
         未着手, 実行中, ステイ中, 完了
     }
 }
-
