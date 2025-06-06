@@ -56,6 +56,7 @@ public class ReportService {
             Report result = results.get(i);
             report.setId(result.getId());
             report.setContent(result.getContent());
+            report.setStatus(result.getStatus());
             report.setLimitDate(result.getLimitDate());
             report.setCreatedDate(result.getCreatedDate());
             report.setUpdatedDate(result.getUpdatedDate());
