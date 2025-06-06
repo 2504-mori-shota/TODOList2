@@ -10,5 +10,7 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
     List<Report> findByLimitDateBetweenAndContentAndStatusOrderByLimitDateAsc(Date startDate, Date endDate, String content, int status);
+    List<Report> findByLimitDateBetweenAndContentOrderByLimitDateAsc(Date startDate, Date endDate, String content);
+    List<Report> findByLimitDateBetweenAndStatusOrderByLimitDateAsc(Date startDate, Date endDate, int status);
     List<Report> findByLimitDateBetweenOrderByLimitDateAsc(Date startDate, Date endDate);
 }

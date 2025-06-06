@@ -36,8 +36,17 @@ public class ReportService {
 
         Date StrDate = df.parse(StrStartDate);
         Date EndDate = df.parse(StrEndDate);
-        if (StringUtils.isBlank(status) || StringUtils.isBlank(content)) {
+        if (StringUtils.isBlank(status) && StringUtils.isBlank(content)) {
             List<Report> results = reportRepository.findByLimitDateBetweenOrderByLimitDateAsc(StrDate, EndDate);
+            List<ReportForm> reports = setReportForm(results);
+            return reports;
+        } else if (StringUtils.isBlank(status) ){
+            List<Report> results = reportRepository.findByLimitDateBetweenAndContentOrderByLimitDateAsc(StrDate, EndDate, content);
+            List<ReportForm> reports = setReportForm(results);
+            return reports;
+        } else if (StringUtils.isBlank(content)) {
+            int intStatus = Integer.parseInt(status);
+            List<Report> results = reportRepository.findByLimitDateBetweenAndStatusOrderByLimitDateAsc(StrDate, EndDate, intStatus);
             List<ReportForm> reports = setReportForm(results);
             return reports;
         }
