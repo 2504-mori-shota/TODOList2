@@ -22,7 +22,7 @@
         </div>
         <div class="date-area">
             タスク期限<br>
-            <input type="date" name="limit_date" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:value="${limit}">
+            <input type="date" th:name="limit_date"th:field="*{limitDate}">
             <input type="submit" value="編集">
         </div>
     </form>

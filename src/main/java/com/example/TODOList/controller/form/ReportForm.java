@@ -22,6 +22,7 @@ public class ReportForm {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "期限を設定してください")
+    @FutureOrPresent(message = "無効な日付です")
     private Date limitDate;
     public LocalDate getLimitLocalDate() {
         return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

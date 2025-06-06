@@ -24,7 +24,7 @@
         </div>
         <div class="date-area">
             タスク期限<br>
-            <input type="date" th:field="*{limitDate}"  value="{limitDate}"><br/>
+            <input type="date" th:name="limit_date" th:field="*{limitDate}"><br/>
             <div th:if="${#fields.hasErrors('limitDate')}" style="color:red;" th:errors="*{limitDate}"></div>
             <input type="submit" value="追加">
         </div>

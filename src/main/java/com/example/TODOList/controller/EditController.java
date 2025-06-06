@@ -51,15 +51,14 @@ public class EditController {
 
     public ModelAndView addContent(
             @PathVariable Integer id,
-            @RequestParam(name="limit_date" , required = false)String limitDate,
-            @ModelAttribute("task")ReportForm report,
+            @ModelAttribute("formModel")ReportForm report,
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) throws ParseException {
         if (result.hasErrors()) {
-            //フラッシュメッセージをセット
-            redirectAttributes.addFlashAttribute("errorMessageForm", "タスクを入力してください");
-            return new ModelAndView("redirect:/edit/{id}");
+            ModelAndView mav = new ModelAndView("/edit");
+            mav.addObject("task", report);
+            return mav;
         }
         report.setId(id);
         // 投稿をテーブルに格納

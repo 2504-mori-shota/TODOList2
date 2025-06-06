@@ -72,7 +72,8 @@ public class ReportService {
 
     private Report setReportEntity(ReportForm reqReport) throws ParseException {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        //Date LimitDate = df.parse(limit);
 
         Report report = new Report();
         report.setId(reqReport.getId());
