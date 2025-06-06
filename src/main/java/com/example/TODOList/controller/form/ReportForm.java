@@ -1,9 +1,6 @@
 package com.example.TODOList.controller.form;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,9 +19,8 @@ public class ReportForm {
 
     private  int status;
 
-
+    @NotEmpty
     private Date limitDate;
-    //  LocalDate に変換して返すメソッド
     public LocalDate getLimitLocalDate() {
         return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }

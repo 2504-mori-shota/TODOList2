@@ -36,7 +36,7 @@ public class ReportService {
 
         Date StrDate = df.parse(StrStartDate);
         Date EndDate = df.parse(StrEndDate);
-        if(status == null) {
+        if(StringUtils.isBlank(status) || StringUtils.isBlank(content)) {
             List<Report> results = reportRepository.findByLimitDateBetweenOrderByLimitDateAsc(StrDate, EndDate);
             List<ReportForm> reports = setReportForm(results);
             return reports;

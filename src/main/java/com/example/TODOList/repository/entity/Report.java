@@ -33,6 +33,8 @@ public class Report {
 
     @Column(name = "limit_date", insertable = true, updatable = true)
     private Date limitDate;
+    //  LocalDate に変換して返すメソッド
+
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
