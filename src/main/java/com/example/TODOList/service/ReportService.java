@@ -81,14 +81,15 @@ public class ReportService {
 
     private Report setReportEntity(ReportForm reqReport) throws ParseException {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //Date LimitDate = df.parse(limit);
 
         Report report = new Report();
         report.setId(reqReport.getId());
         report.setContent(reqReport.getContent());
         if(reqReport.getStatus() == 0){
-            reqReport.setStatus(1);
+            int num = 1;
+            report.setStatus(num);
         } else {
             report.setStatus(reqReport.getStatus());
         }
