@@ -18,7 +18,7 @@
     <form th:method="put" th:action="@{/update}" th:object="${formModel}">
         <div class="form-area">
             <div th:if="${#fields.hasErrors('content')}" style="color:red;" th:errors="*{content}"></div>
-            <label>タスク内容</label>
+            <label>タスク内容</label><br/>
             <textarea class="tweet-box" name="task" th:field="*{content}" size="20" maxlength="200" /></textarea><br/>
         </div>
         <div class="date-area">
