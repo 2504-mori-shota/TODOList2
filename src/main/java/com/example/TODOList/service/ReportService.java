@@ -22,7 +22,7 @@ public class ReportService {
     @Autowired
     private final ReportRepository reportRepository;
 
-    public List<ReportForm> findByCreatedDateBetweenAndContentAndStatus(String startDate, String endDate, String content, String status) throws ParseException {
+    public List<ReportForm> findByLimitDateBetweenAndContentAndStatus(String startDate, String endDate, String content, String status) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String StrStartDate = "2020-01-01 00:00:00";
         String StrEndDate = "2100-12-31 23:59:59";
@@ -78,7 +78,11 @@ public class ReportService {
         Report report = new Report();
         report.setId(reqReport.getId());
         report.setContent(reqReport.getContent());
-        report.setStatus(reqReport.getStatus());
+        if(reqReport.getStatus() == 0){
+            reqReport.setStatus(1);
+        } else {
+            report.setStatus(reqReport.getStatus());
+        }
         report.setLimitDate(reqReport.getLimitDate());
         report.setCreatedDate(reqReport.getCreatedDate());
         report.setUpdatedDate(currentTime);
