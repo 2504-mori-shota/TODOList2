@@ -5,6 +5,7 @@ import com.example.TODOList.controller.form.ReportForm;
 import com.example.TODOList.repository.ReportRepository;
 import com.example.TODOList.repository.entity.Report;
 import com.example.TODOList.service.ReportService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class ForumController {
                            @RequestParam(name="endDate", required = false )String endDate,
                            @RequestParam(name="status", required = false)String status,
                            @RequestParam(name="content", required = false)String content,
+                           @Valid
                            Model model
     ) throws ParseException {
         ModelAndView mav = new ModelAndView();

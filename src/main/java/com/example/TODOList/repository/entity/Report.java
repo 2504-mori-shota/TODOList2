@@ -34,9 +34,7 @@ public class Report {
     @Column(name = "limit_date", insertable = true, updatable = true)
     private Date limitDate;
     //  LocalDate に変換して返すメソッド
-    public LocalDate getLimitLocalDate() {
-        return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
+
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
