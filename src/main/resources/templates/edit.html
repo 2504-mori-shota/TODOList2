@@ -15,14 +15,17 @@
 </div>
 <div class="main-contents">
     <!-- actionのURLがPOSTMappingと違うと上手くいかない -->
-    <form th:method="put" th:action="@{/update/{id}(id=${formModel.id})}" th:object="${formModel}">
+    <form th:method="put" th:action="@{/update}" th:object="${formModel}">
         <div class="form-area">
+            <div th:if="${#fields.hasErrors('content')}" style="color:red;" th:errors="*{content}"></div>
             <label>タスク内容</label>
             <textarea class="tweet-box" name="task" th:field="*{content}" size="20" maxlength="200" /></textarea><br/>
         </div>
         <div class="date-area">
+            <div th:if="${#fields.hasErrors('limitDate')}" style="color:red;" th:errors="*{limitDate}"></div>
             タスク期限<br>
             <input type="date" th:name="limit_date"th:field="*{limitDate}">
+            <input th:type="hidden" th:name="id" th:value="${formModel.id}">
             <input type="submit" value="編集">
         </div>
     </form>

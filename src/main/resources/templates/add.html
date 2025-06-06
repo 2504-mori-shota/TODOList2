@@ -17,15 +17,15 @@
     <!-- actionのURLがPOSTMappingと違うと上手くいかない -->
     <form method="post" action="/insert" th:object="${formModel}">
         <div class="form-area">
+            <div th:if="${#fields.hasErrors('content')}" style="color:red;" th:errors="*{content}"></div>
             <label>タスク内容</label>
             <textarea class="tweet-box" name="task" th:field="*{content}" size="20" maxlength="200"/></textarea><br/>
-            <div th:if="${#fields.hasErrors('content')}" style="color:red;" th:errors="*{content}"></div>
 
         </div>
         <div class="date-area">
+            <div th:if="${#fields.hasErrors('limitDate')}" style="color:red;" th:errors="*{limitDate}"></div>
             タスク期限<br>
             <input type="date" th:name="limit_date" th:field="*{limitDate}"><br/>
-            <div th:if="${#fields.hasErrors('limitDate')}" style="color:red;" th:errors="*{limitDate}"></div>
             <input type="submit" value="追加">
         </div>
     </form>

@@ -47,20 +47,21 @@ public class EditController {
     /*
      * 新規投稿処理
      */
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
 
     public ModelAndView addContent(
-            @PathVariable Integer id,
-            @ModelAttribute("formModel")ReportForm report,
+            @RequestParam(name="id", required = false)String strId,
+            @Valid@ModelAttribute("formModel")ReportForm report,
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) throws ParseException {
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("/edit");
-            mav.addObject("task", report);
+            mav.addObject("formModel", report);
             return mav;
         }
-        report.setId(id);
+        report.setId(Integer.parseInt(strId));
         // 投稿をテーブルに格納
         reportService.saveReport(report);
         // rootへリダイレクト
