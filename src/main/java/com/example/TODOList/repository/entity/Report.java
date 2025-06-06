@@ -41,6 +41,6 @@ public class Report {
     @Column(name = "updated_Date")
     private Date updatedDate;
     public enum Status {
-        未登録, 未着手, 実行中, ステイ中, 完了
+         未着手, 実行中, ステイ中, 完了
     }
 }
