@@ -3,6 +3,7 @@ package com.example.TODOList.controller.form;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -13,14 +14,16 @@ public class ReportForm {
 
     private int id;
 
-    @NotBlank
-    @Size(max = 140)
+    @NotBlank(message = "投稿内容を入力してください")
+    @Size(max = 140, message= "タスクは140文字以内で入力してください")
     private String content;
 
     private  int status;
 
-    @NotEmpty
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "期限を設定してください")
     private Date limitDate;
+    //  LocalDate に変換して返すメソッド
     public LocalDate getLimitLocalDate() {
         return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }

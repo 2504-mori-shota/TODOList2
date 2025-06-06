@@ -22,9 +22,9 @@ public class ReportService {
     @Autowired
     private final ReportRepository reportRepository;
 
-    public List<ReportForm>findByCreatedDateBetweenAndContentAndStatus(String startDate, String endDate, String content, String status) throws ParseException {
+    public List<ReportForm> findByCreatedDateBetweenAndContentAndStatus(String startDate, String endDate, String content, String status) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String StrStartDate ="2020-01-01 00:00:00";
+        String StrStartDate = "2020-01-01 00:00:00";
         String StrEndDate = "2100-12-31 23:59:59";
 
         if (!StringUtils.isBlank(startDate)) {
@@ -36,7 +36,7 @@ public class ReportService {
 
         Date StrDate = df.parse(StrStartDate);
         Date EndDate = df.parse(StrEndDate);
-        if(StringUtils.isBlank(status) || StringUtils.isBlank(content)) {
+        if (StringUtils.isBlank(status) || StringUtils.isBlank(content)) {
             List<Report> results = reportRepository.findByLimitDateBetweenOrderByLimitDateAsc(StrDate, EndDate);
             List<ReportForm> reports = setReportForm(results);
             return reports;
@@ -65,19 +65,20 @@ public class ReportService {
         return reports;
     }
 
-    public void saveReport(ReportForm reqReport, String limit) throws ParseException {
-        Report saveReport = setReportEntity(reqReport, limit);
+    public void saveReport(ReportForm reqReport) throws ParseException {
+        Report saveReport = setReportEntity(reqReport);
         reportRepository.save(saveReport);
     }
-    private Report setReportEntity(ReportForm reqReport, String limit) throws ParseException {
+
+    private Report setReportEntity(ReportForm reqReport) throws ParseException {
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date LimitDate = df.parse(limit);
+
+
         Report report = new Report();
         report.setId(reqReport.getId());
         report.setContent(reqReport.getContent());
         report.setStatus(reqReport.getStatus());
-        report.setLimitDate(LimitDate);
+        report.setLimitDate(reqReport.getLimitDate());
         report.setCreatedDate(reqReport.getCreatedDate());
         report.setUpdatedDate(currentTime);
         return report;
@@ -96,6 +97,7 @@ public class ReportService {
          */
         return reports.get(0);
     }
+
     @Transactional
     public void updateStatus(Long id, int status) {
         Report report = reportRepository.findById(id)

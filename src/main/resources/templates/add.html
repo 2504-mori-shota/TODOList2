@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <link th:href="@{/css/style.css}" rel="styleSheet">
-  <title>タスク追加</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>タスク追加</title>
 </head>
 <body>
 <div class="header-contents">
-  <h2>タスク追加</h2>
+    <h2>タスク追加</h2>
 </div>
 
 <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
-  <strong th:text="${errorMessageForm}"></strong>
+    <strong th:text="${errorMessageForm}"></strong>
 </div>
 <div class="main-contents">
-  <!-- actionのURLがPOSTMappingと違うと上手くいかない -->
-  <form method="post" action="/insert" th:object="${formModel}">
-    <div class="form-area">
-      <label>タスク内容</label>
-      <textarea class="tweet-box" name="task" th:field="*{content}" size="20" maxlength="200" /></textarea><br/>
-    </div>
-    <div class="date-area">
-      タスク期限<br>
-      <input type="date" name="limit_date" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:value="${limit}">
-      <input type="submit" value="追加">
-    </div>
-  </form>
+    <!-- actionのURLがPOSTMappingと違うと上手くいかない -->
+    <form method="post" action="/insert" th:object="${formModel}">
+        <div class="form-area">
+            <label>タスク内容</label>
+            <textarea class="tweet-box" name="task" th:field="*{content}" size="20" maxlength="200"/></textarea><br/>
+            <div th:if="${#fields.hasErrors('content')}" style="color:red;" th:errors="*{content}"></div>
+
+        </div>
+        <div class="date-area">
+            タスク期限<br>
+            <input type="date" th:field="*{limitDate}" th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"><br/>
+            <div th:if="${#fields.hasErrors('limitDate')}" style="color:red;" th:errors="*{limitDate}"></div>
+            <input type="submit" value="追加">
+        </div>
+    </form>
 </div>
 <div class="footer-contents">
-  <form action="/">
-    <input type="submit" value="戻る" />
-  </form>
+    <form action="/">
+        <input type="submit" value="戻る"/>
+    </form>
 </div>
 </body>
 </html>

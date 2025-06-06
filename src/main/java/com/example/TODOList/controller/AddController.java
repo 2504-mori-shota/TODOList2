@@ -33,25 +33,25 @@ public class AddController {
         // mav.addObject("errorMessageForm", errorMessages);
         return mav;
     }
+
     /*
      * 新規投稿処理
      */
     @PostMapping("/insert")
 
     public ModelAndView addContent(
-            @RequestParam(name="limit_date" , required = false)String limitDate,
-            @Valid
-            @ModelAttribute("formModel")ReportForm reportForm,
+            @Valid @ModelAttribute("formModel") ReportForm reportForm,
             BindingResult result,
             RedirectAttributes redirectAttributes,
-            Model model) throws ParseException {
+            Model model
+    ) throws ParseException {
         if (result.hasErrors()) {
-            //フラッシュメッセージをセット
-            redirectAttributes.addFlashAttribute("errorMessageForm", "タスクを入力してください");
-            return new ModelAndView("redirect:/add");
+            ModelAndView mav = new ModelAndView("/add");
+            mav.addObject("formModel", reportForm);
+            return mav;
         }
         // 投稿をテーブルに格納
-        reportService.saveReport(reportForm, limitDate);
+        reportService.saveReport(reportForm);
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }

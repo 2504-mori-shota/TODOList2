@@ -49,7 +49,7 @@ public class EditController {
         }
         report.setId(id);
         // 投稿をテーブルに格納
-        reportService.saveReport(report, limitDate);
+        reportService.saveReport(report);
         // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
