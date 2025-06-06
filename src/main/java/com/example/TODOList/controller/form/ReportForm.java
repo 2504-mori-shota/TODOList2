@@ -3,6 +3,7 @@ package com.example.TODOList.controller.form;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -19,7 +20,8 @@ public class ReportForm {
 
     private  int status;
 
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "期限を設定してください")
     private Date limitDate;
     public LocalDate getLimitLocalDate() {
         return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

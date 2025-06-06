@@ -31,15 +31,13 @@ public class Report {
     @Max(value = 4)
     private int status;
 
-    @Column(name = "limit_date", insertable = true, updatable = true)
+    @Column(name = "limit_Date")
     private Date limitDate;
-    //  LocalDate に変換して返すメソッド
-
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
 
-    @Column(name = "updated_Date", insertable = false, updatable = true)
+    @Column(name = "updated_Date")
     private Date updatedDate;
     public enum Status {
         未着手, 実行中, ステイ中, 完了
