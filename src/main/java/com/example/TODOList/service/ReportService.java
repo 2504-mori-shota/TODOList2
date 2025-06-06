@@ -3,6 +3,7 @@ package com.example.TODOList.service;
 import com.example.TODOList.controller.form.ReportForm;
 import com.example.TODOList.repository.ReportRepository;
 import com.example.TODOList.repository.entity.Report;
+import io.micrometer.common.util.StringUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,30 @@ public class ReportService {
     @Autowired
     private final ReportRepository reportRepository;
 
-    public List<Report> getAllReports() {
-        return reportRepository.findAllByOrderByLimitDateAsc();
+    public List<ReportForm>findByCreatedDateBetweenAndContentAndStatus(String startDate, String endDate, String content, String status) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String StrStartDate ="2020-01-01 00:00:00";
+        String StrEndDate = "2100-12-31 23:59:59";
+
+        if (!StringUtils.isBlank(startDate)) {
+            StrStartDate = startDate + " 00:00:00";
+        }
+        if (!StringUtils.isBlank(endDate)) {
+            StrEndDate = endDate + " 23:59:59";
+        }//df.format(startDate)
+
+        Date StrDate = df.parse(StrStartDate);
+        Date EndDate = df.parse(StrEndDate);
+        if(status == null) {
+            List<Report> results = reportRepository.findByLimitDateBetweenOrderByLimitDateAsc(StrDate, EndDate);
+            List<ReportForm> reports = setReportForm(results);
+            return reports;
+        }
+        int intStatus = Integer.parseInt(status);
+        List<Report> results = reportRepository.findByLimitDateBetweenAndContentAndStatusOrderByLimitDateAsc(StrDate, EndDate, content, intStatus);
+        List<ReportForm> reports = setReportForm(results);
+        return reports;
+
     }
 
     private List<ReportForm> setReportForm(List<Report> results) {
@@ -33,6 +56,7 @@ public class ReportService {
             Report result = results.get(i);
             report.setId(result.getId());
             report.setContent(result.getContent());
+            report.setStatus(result.getStatus());
             report.setLimitDate(result.getLimitDate());
             report.setCreatedDate(result.getCreatedDate());
             report.setUpdatedDate(result.getUpdatedDate());
