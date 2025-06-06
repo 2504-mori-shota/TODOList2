@@ -16,6 +16,7 @@ public class ReportForm {
 
     @NotBlank(message = "タスクを入力してください")
     @Size(max = 140, message = "タスクは140文字以内で入力してください")
+    @Pattern(regexp = "^[^　]*$", message = "タスクを入力してください")
     private String content;
 
     private  int status;
