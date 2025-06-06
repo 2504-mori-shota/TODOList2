@@ -13,13 +13,13 @@ public class ReportForm {
 
     private int id;
 
-    @NotBlank
-    @Size(max = 140)
+    @NotBlank(message = "タスクを入力してください")
+    @Size(max = 140, message = "タスクは140文字以内で入力してください")
     private String content;
 
     private  int status;
 
-    @NotEmpty
+
     private Date limitDate;
     public LocalDate getLimitLocalDate() {
         return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

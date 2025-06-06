@@ -89,6 +89,10 @@ public class ReportService {
     public ReportForm editReport(Integer id) {
         List<Report> results = new ArrayList<>();
         results.add((Report) reportRepository.findById(Long.valueOf(id)).orElse(null));
+        if(results.get(0) == null){
+            ReportForm repo = null;
+            return null;
+        }
         List<ReportForm> reports = setReportForm(results);
         /*
          * 上記の処理は仮にデータを2つ以上取得してきた際にバグがおこらないように配列にデータを入れ、

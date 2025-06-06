@@ -2,6 +2,7 @@ package com.example.TODOList.controller;
 
 import com.example.TODOList.controller.form.ReportForm;
 import com.example.TODOList.service.ReportService;
+import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,19 +13,32 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class EditController {
     @Autowired
     ReportService reportService;
 
-    @GetMapping("/edit/{id}")
-    public ModelAndView newContent(@PathVariable Integer id) {
+    @GetMapping("/edit")
+    public ModelAndView newContent(
+            @RequestParam(name="id", required = false)String strId,
+            RedirectAttributes redirectAttributes
+        ) {
         ModelAndView mav = new ModelAndView();
-        // form用の空のentityを準備
-        ReportForm reportForm = reportService.editReport(id);
-        // 準備した空のFormを保管
-        mav.addObject("formModel", reportForm);
+        ReportForm reportForm = null;
+        if(!StringUtils.isBlank(strId) && strId.matches("^[0-9]*$")) {
+            reportForm = reportService.editReport(Integer.parseInt(strId));
+            // 準備した空のFormを保管
+            mav.addObject("formModel", reportForm);
+
+        }
+        if(reportForm == null){
+            redirectAttributes.addFlashAttribute("errorMessageForm", "不正なパラメータです");
+            return new ModelAndView("redirect:/");
+        }
+
         // 画面遷移先を指定
         mav.setViewName("/edit");
         // mav.addObject("errorMessageForm", errorMessages);

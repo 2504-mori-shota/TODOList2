@@ -47,7 +47,7 @@ public class AddController {
             Model model) throws ParseException {
         if (result.hasErrors()) {
             //フラッシュメッセージをセット
-            redirectAttributes.addFlashAttribute("errorMessageForm", "タスクを入力してください");
+           model.addAttribute("formModel", reportForm);
             return new ModelAndView("redirect:/add");
         }
         // 投稿をテーブルに格納

@@ -8,6 +8,9 @@
 <body>
 <div class="header-contents">
     <h1>ToDo</h1>
+    <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
+        <strong th:text="${errorMessageForm}"></strong>
+    </div>
     <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
 </div>
 <div class="main-contents">
@@ -65,8 +68,9 @@
                    th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">
             </td>
             <td>
-                <form th:action="@{/edit/{id}(id=*{id})}" >
-                    <button type="submit">編集</button>
+                <form th:action="@{/edit}" >
+                    <input th:type="hidden" name="id" th:value="${task.id}">
+                    <button type="submit" >編集</button>
                 </form>
             </td>
             <td>
