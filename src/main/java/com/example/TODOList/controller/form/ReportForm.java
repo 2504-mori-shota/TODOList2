@@ -23,16 +23,13 @@ public class ReportForm {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "期限を設定してください")
-    private Date limitDate;
-    @AssertTrue(message = "無効な日付です")
-    public boolean isValidLimitDate() {
-        if (limitDate == null) return false;
-        LocalDate input = limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return !input.isBefore(LocalDate.now());
-    }
+    @FutureOrPresent(message = "無効な日付です")
+    //Data型は、時間までみてしまうため、今日も過去とみなされはじかれる可能性あり。
+    //LocalDateにすることで、日にちだけを比べさせる。
+    private LocalDate limitDate;
 
     public LocalDate getLimitLocalDate() {
-        return limitDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return limitDate;
     }
     private Date createdDate;
     private Date updatedDate;

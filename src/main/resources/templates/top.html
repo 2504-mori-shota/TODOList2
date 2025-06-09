@@ -62,10 +62,9 @@
                     <button type="submit" onclick="return confirm('変更しますか？');">変更</button>
                 </form>
             </td>
-            <!-- "-->
            <td
-                   th:style="${task.limitLocalDate.isAfter(today) ? 'background-color:yellow' : 'background-color:red'}"
-                   th:text="${#dates.format(task.limitDate, 'yyyy/MM/dd')}">
+                   th:style="${task.limitDate.isAfter(today) ? 'background-color:yellow' : 'background-color:red'}"
+                   th:text="${#temporals.format(task.limitDate, 'yyyy/MM/dd')}">
             </td>
             <td>
                 <form th:action="@{/edit}" >
