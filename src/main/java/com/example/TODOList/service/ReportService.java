@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +67,14 @@ public class ReportService {
             report.setId(result.getId());
             report.setContent(result.getContent());
             report.setStatus(result.getStatus());
-            report.setLimitDate(result.getLimitDate());
+
+            // Date → LocalDate に変換
+            if (result.getLimitDate() != null) {
+                report.setLimitDate(result.getLimitDate().toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate());
+            }
+
             report.setCreatedDate(result.getCreatedDate());
             report.setUpdatedDate(result.getUpdatedDate());
             reports.add(report);
@@ -93,7 +101,18 @@ public class ReportService {
         } else {
             report.setStatus(reqReport.getStatus());
         }
-        report.setLimitDate(reqReport.getLimitDate());
+        // LocalDate → Date 変換
+        if (reqReport.getLimitDate() != null) {
+            Date limitDate = Date.from(
+                    reqReport.getLimitDate()
+                            .atStartOfDay(ZoneId.systemDefault())
+                            .toInstant()
+            );
+            report.setLimitDate(limitDate);
+        } else {
+            report.setLimitDate(null);
+        }
+
         report.setCreatedDate(reqReport.getCreatedDate());
         report.setUpdatedDate(currentTime);
         return report;

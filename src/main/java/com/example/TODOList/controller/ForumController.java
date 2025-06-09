@@ -35,7 +35,6 @@ public class ForumController {
                            @RequestParam(name="endDate", required = false )String endDate,
                            @RequestParam(name="status", required = false)String status,
                            @RequestParam(name="content", required = false)String content,
-                           @Valid
                            Model model
     ) throws ParseException {
         ModelAndView mav = new ModelAndView();
