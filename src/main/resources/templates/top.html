@@ -44,8 +44,12 @@
             <th>ステータス　　　　　</th>
             <th>タスク期限　　　　　</th>
         </tr>
+
         <tr th:each="task : ${tasks}" th:object="${task}">
-            <td th:text="*{content}">内容</td>
+
+            <td>
+                <pre class="wrap-text" th:text="*{content}">内容</pre>
+            </td>
 
             <td>
                 <form th:action="@{/task/updateStatus}" method="post">
@@ -62,6 +66,7 @@
                     <button type="submit" onclick="return confirm('変更しますか？');">変更</button>
                 </form>
             </td>
+
            <td
                    th:style="${task.limitDate.isAfter(today) ? 'background-color:yellow' : 'background-color:red'}"
                    th:text="${#temporals.format(task.limitDate, 'yyyy/MM/dd')}">
