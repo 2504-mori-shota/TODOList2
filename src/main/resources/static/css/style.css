@@ -18,6 +18,11 @@ body {
 	margin-left: 20px;
 }
 
+.wrap-text{
+    white-space: pre-wrap;
+    overflow-wrap: break-word
+}
+
 .delete-button input[type="submit"] {
   background-color: #555;
   color: white;
