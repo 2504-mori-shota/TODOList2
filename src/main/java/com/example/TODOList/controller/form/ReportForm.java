@@ -23,7 +23,6 @@ public class ReportForm {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "期限を設定してください")
-
     private Date limitDate;
     @AssertTrue(message = "無効な日付です")
     public boolean isValidLimitDate() {
