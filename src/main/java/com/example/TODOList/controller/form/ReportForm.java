@@ -26,6 +26,7 @@ public class ReportForm {
     @FutureOrPresent(message = "無効な日付です")
     //Data型は、時間までみてしまうため、今日も過去とみなされはじかれる可能性あり。
     //LocalDateにすることで、日にちだけを比べさせる。
+    //aaaaaa
     private LocalDate limitDate;
 
     public LocalDate getLimitLocalDate() {
